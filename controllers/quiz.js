@@ -153,3 +153,32 @@ exports.check = (req, res, next) => {
         answer
     });
 };
+
+// GET /quizzes/:quizId/randomplay
+exports.randomplay = (req, res, next) => {
+
+    const {quiz, query} = req;
+
+    const answer = query.answer || '';
+
+    res.render('quizzes/play', {
+        quiz,
+        answer
+    });
+};
+
+// GET /quizzes/:quizId/randomcheck
+exports.randomcheck = (req, res, next) => {
+
+    const {quiz, query} = req;
+
+    const answer = query.answer || "";
+    const result = answer.toLowerCase().trim() === quiz.answer.toLowerCase().trim();
+
+    res.render('quizzes/result', {
+        quiz,
+        result,
+        answer
+    });
+};
+
