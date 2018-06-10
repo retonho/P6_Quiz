@@ -16,26 +16,16 @@ const sequelize = new Sequelize(url);
 // Import the definition of the Quiz Table from quiz.js
 sequelize.import(path.join(__dirname, 'quiz'));
 
-// Import the definition of the Tips Table from tip.js
-sequelize.import(path.join(__dirname,'tip'));
-
-// Import the definition of the Users Table from user.js
-sequelize.import(path.join(__dirname,'user'));
-
 // Session
 sequelize.import(path.join(__dirname,'session'));
 
-
-// Relation between models
-
-const {quiz, tip, user} = sequelize.models;
-
-tip.belongsTo(quiz);
-quiz.hasMany(tip);
-
-// Relation 1-to-N between User and Quiz:
-user.hasMany(quiz, {foreignKey: 'authorId'});
-quiz.belongsTo(user, {as: 'author', foreignKey: 'authorId'});
+// Create tables
+sequelize.sync()
+.then(() => console.log('Data Bases created successfully'))
+.catch(error => {
+    console.log("Error creating the data base tables:", error);
+    process.exit(1);
+});
 
 
 module.exports = sequelize;
